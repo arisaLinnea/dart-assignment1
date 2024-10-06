@@ -1,0 +1,17 @@
+{
+  "owners": [
+    {
+      "id": "803fb7fd-080c-4397-ad70-8963932b6dca",
+      "name": "Test Testsson",
+      "ssn": "420502-9186"
+    },
+    {
+      "id": "c398ccaa-2ba6-401d-8b19-b87b1fcf3507",
+      "name": "Anna Testsson",
+      "ssn": "900808-2381"
+    }
+  ],
+  "vehicles": [],
+  "parkinglots": [],
+  "parkings": []
+}
