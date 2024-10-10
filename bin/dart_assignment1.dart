@@ -2,7 +2,7 @@ import 'package:dart_assignment1/dart_assignment1.dart' as dart_assignment;
 import 'dart:io';
 
 import 'package:dart_assignment1/src/owner_screen.dart';
-import 'package:dart_assignment1/src/utils.dart';
+import 'package:dart_assignment1/src/utils/effects.dart';
 
 Set<String> userOptions = {
   '1. Persons',
@@ -51,5 +51,5 @@ void main() {
     // print('You choose: $userInput');
   }
 
-  printGreeting('Thank you for choosing FindMeASpot!');
+  exitCli();
 }

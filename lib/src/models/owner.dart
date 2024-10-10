@@ -5,14 +5,20 @@ class Owner {
   String _name;
   String _ssn;
 
-  // Owner(this.name, this.ssn, [String? id]) : id = id ?? Uuid().v4();
   Owner({required String name, required String ssn, String? id})
-      : _id = id ?? Uuid().v4(),
+      : _id = id ??
+            Uuid().v4(), //not a constant and can't be used as a default value
         _name = name,
         _ssn = ssn;
 
-  String get id {
-    return _id;
+  String get id => _id;
+
+  set name(String value) {
+    _name = value;
+  }
+
+  set ssn(String value) {
+    _ssn = value;
   }
 
   factory Owner.fromJson(Map<String, dynamic> json) {

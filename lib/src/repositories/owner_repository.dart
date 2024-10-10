@@ -1,31 +1,18 @@
 import 'package:dart_assignment1/src/models/Owner.dart';
 import 'package:dart_assignment1/src/repositories/repository.dart';
 
-class OwnerRespository extends Repository {
-  final Map<String, Owner> _owners = {};
-  @override
-  void addToList(item) {
-    _owners[item.id] = item;
-  }
+class OwnerRespository extends Repository<Owner> {
+  static final OwnerRespository _instance = OwnerRespository._internal();
+
+  OwnerRespository._internal();
+
+  static OwnerRespository get instance =>
+      _instance; // användning => OwnerRespository.instance.add(Owner("Bob", 23));
+  factory OwnerRespository() =>
+      _instance; // användning => OwnerRespository.add(Owner("Bob", 23));
 
   @override
-  Owner getElementById(int id) {
-    // TODO: implement getElementById
-    throw UnimplementedError();
-  }
-
-  @override
-  Map<String, Owner> getList() {
-    return _owners;
-  }
-
-  @override
-  void remove(id) {
-    // TODO: implement remove
-  }
-
-  @override
-  void update(item) {
-    // TODO: implement update
+  Owner getElementById({required String id}) {
+    return super.getList().firstWhere((element) => element.id == id);
   }
 }
