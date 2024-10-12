@@ -73,6 +73,7 @@ void ownerScreen() {
             editOwner.name = ssn;
           }
           respository.update(index: editNo - 1, item: editOwner);
+          print('Owner has been updated');
         }
         printContinue();
         break;
@@ -88,7 +89,7 @@ void ownerScreen() {
               question: 'What number do you want to remove? ',
               maxNumber: ownerList.length);
           respository.remove(index: removeNo - 1);
-          print('Owner has been updated.');
+          print('List of owners has been updated.');
         }
 
         printContinue();

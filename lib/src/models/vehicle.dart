@@ -1,6 +1,6 @@
 import 'package:uuid/uuid.dart';
 
-import 'owner.dart';
+import 'package:dart_assignment1/src/models/Owner.dart';
 
 enum VehicalType { Car, MC, Bicycle, Moped, Tractor }
 
@@ -21,6 +21,20 @@ class Vehicle {
         _type = type,
         _owner = owner;
 
+  String get id => _id;
+
+  set registrationNo(String value) {
+    _registrationNo = value;
+  }
+
+  set type(VehicalType value) {
+    _type = value;
+  }
+
+  set owner(Owner value) {
+    _owner = value;
+  }
+
   factory Vehicle.fromJson(Map<String, dynamic> json) {
     return Vehicle(
       id: json['id'],
@@ -36,4 +50,9 @@ class Vehicle {
         'type': _type,
         'owner': _owner.toJson()
       };
+
+  @override
+  String toString() {
+    return 'RegistrationNo: $_registrationNo, type: $_type, owner: (${_owner.toString()})';
+  }
 }

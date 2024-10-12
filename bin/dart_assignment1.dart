@@ -3,9 +3,10 @@ import 'dart:io';
 
 import 'package:dart_assignment1/src/owner_screen.dart';
 import 'package:dart_assignment1/src/utils/effects.dart';
+import 'package:dart_assignment1/src/vehicle_screen.dart';
 
 Set<String> userOptions = {
-  '1. Persons',
+  '1. Owners',
   '2. Vehicles',
   '3. Parkinglots',
   '4. Your parkings',
@@ -44,6 +45,9 @@ void main() {
     switch (userInput) {
       case 1:
         ownerScreen();
+        break;
+      case 2:
+        vehicleScreen();
         break;
       default:
         break;
