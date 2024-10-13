@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dart_assignment1/src/models/owner.dart';
 import 'package:dart_assignment1/src/repositories/owner_repository.dart';
 import 'package:dart_assignment1/src/utils/effects.dart';
@@ -11,7 +9,7 @@ List<String> userOptions = [
   '3. Edit an owner',
   '4. Remove an owner',
   '5. Go back to start screen',
-  '6. Quit',
+  'q. Quit',
 ];
 
 void ownerScreen() {
@@ -20,13 +18,10 @@ void ownerScreen() {
   clearScreen();
 
   while (userInput != 5) {
-    // String? name = "";
-    // String? ssn = "";
     printGreeting('You can now administrate owners. What do you wanna do?');
-    // userOptions.forEach(stdout.writeln);
     userInput = checkIntOption(
         question: 'Choose an option (1-5): ',
-        maxNumber: 6,
+        maxNumber: 5,
         menu: true,
         userOptions: userOptions);
     clearScreen();
@@ -54,9 +49,6 @@ void ownerScreen() {
         if (ownerList.isEmpty) {
           print('There is no owners to edit.');
         } else {
-          // for (final (index, item) in ownerList.indexed) {
-          //   print("${index + 1}. $item");
-          // }
           int editNo = checkIntOption(
               question: 'What number do you want to edit? ',
               maxNumber: ownerList.length,
@@ -87,9 +79,6 @@ void ownerScreen() {
         if (ownerList.isEmpty) {
           print('There is no owners to remove.');
         } else {
-          // for (final (index, item) in ownerList.indexed) {
-          //   print("${index + 1}. $item");
-          // }
           int removeNo = checkIntOption(
               question: 'What number do you want to remove? ',
               maxNumber: ownerList.length,

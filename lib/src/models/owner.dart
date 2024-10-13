@@ -25,7 +25,7 @@ class Owner {
     return Owner(
       id: json['id'],
       name: json['name'],
-      ssn: json['description'],
+      ssn: json['ssn'],
     );
   }
 

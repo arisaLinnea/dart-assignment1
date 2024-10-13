@@ -54,6 +54,10 @@ void printAction(String text) {
   print('$brightGreen$text$reset');
 }
 
+void printListInfo(String text) {
+  print('$magenta$text$reset');
+}
+
 void printWarning(String text) {
   print('$yellow$text$reset');
 }

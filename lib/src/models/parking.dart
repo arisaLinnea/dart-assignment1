@@ -45,16 +45,17 @@ class Parking {
         vehicle: json['vehicle'] ?? Vehicle.fromJson(json['vehicle']),
         parkinglot:
             json['parkinglot'] ?? ParkingLot.fromJson(json['parkinglot']),
-        startTime: json['startTime'],
-        endTime: json['endTime']);
+        startTime: DateTime.parse(json['startTime']),
+        endTime: json['endTime'] ?? DateTime.parse(json['startTime']));
   }
 
   Map<String, dynamic> toJson() => {
         'id': _id,
         'vehicle': _vehicle.toJson(),
         'parkinglot': _parkinglot.toJson(),
-        'startTime': _startTime,
-        'endTime': _endTime
+        'startTime': _startTime
+            .toIso8601String(), // Convert DateTime to ISO 8601 string,
+        'endTime': _endTime?.toIso8601String()
       };
 
   @override

@@ -17,6 +17,5 @@ abstract class Repository<T> {
   void remove({required int index}) {
     T item = _list.elementAt(index);
     _list.remove(item);
-    //_item.removeAt(index)
   }
 }

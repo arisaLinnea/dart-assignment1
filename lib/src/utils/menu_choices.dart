@@ -51,6 +51,9 @@ int checkIntOption(
     menu ? menuOption(userOptions) : listOption(userOptions);
     stdout.write(question);
     String? input = stdin.readLineSync();
+    if (menu && (input == 'q' || input == "Q")) {
+      exitCli();
+    }
     if (input == null ||
         int.tryParse(input) == null ||
         int.parse(input) < 1 ||

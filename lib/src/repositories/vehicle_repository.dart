@@ -6,10 +6,7 @@ class VehicleRespository extends Repository<Vehicle> {
 
   VehicleRespository._internal();
 
-  // static VehicleRespository get instance =>
-  //     _instance; // användning => VehicleRespository.instance.add(Vehicle("Bob", 23));
-  factory VehicleRespository() =>
-      _instance; // användning => VehicleRespository.add(Vehicle("Bob", 23));
+  factory VehicleRespository() => _instance;
 
   @override
   Vehicle getElementById({required String id}) {

@@ -11,6 +11,8 @@ class Address {
     return Address(json['street'], json['zipCode'], json['city']);
   }
 
+  //TODO implement toJson
+
   @override
   String toString() {
     return '$_street, $_zipCode $_city';

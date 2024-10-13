@@ -6,10 +6,7 @@ class ParkingRespository extends Repository<Parking> {
 
   ParkingRespository._internal();
 
-  // static ParkingRespository get instance =>
-  //     _instance; // användning => ParkingRespository.instance.add(Owner("Bob", 23));
-  factory ParkingRespository() =>
-      _instance; // användning => ParkingRespository.add(Owner("Bob", 23));
+  factory ParkingRespository() => _instance;
 
   @override
   Parking getElementById({required String id}) {

@@ -11,7 +11,53 @@
       "ssn": "900808-2381"
     }
   ],
-  "vehicles": [],
-  "parkinglots": [],
-  "parkings": []
+  "vehicles": [
+    {
+      "id": "a7ee5177-2056-491a-9634-a558d18e0cef",
+      "registrationNo": "ABC123",
+      "type": "VehicleType.Car",
+      "owner": {
+        "id": "c398ccaa-2ba6-401d-8b19-b87b1fcf3507",
+        "name": "Anna Testsson",
+        "ssn": "900808-2381"
+      }
+    }
+  ],
+  "parkinglots": [
+    {
+      "id": "54897a23-04d5-41f3-a4a5-97c5e252ddcc",
+      "address": {
+        "street": "Storgatanvägen 30",
+        "zipCode": "12345",
+        "city": "Storköping"
+      },
+      "hourlyPrice": "5.50"
+    }
+  ],
+  "parkings": [
+    {
+      "id": "ec48643d-d01e-48bb-b551-ac6aa85b9caa",
+      "vehicle": {
+        "id": "a7ee5177-2056-491a-9634-a558d18e0cef",
+        "registrationNo": "ABC123",
+        "type": "VehicleType.Car",
+        "owner": {
+          "id": "c398ccaa-2ba6-401d-8b19-b87b1fcf3507",
+          "name": "Anna Testsson",
+          "ssn": "900808-2381"
+        }
+      },
+      "parkinglot": {
+        "id": "54897a23-04d5-41f3-a4a5-97c5e252ddcc",
+        "address": {
+          "street": "Storgatanvägen 30",
+          "zipCode": "12345",
+          "city": "Storköping"
+        },
+        "hourlyPrice": "5.50"
+      },
+      "startTime": "2024-10-10T19:38:34.030464",
+      "endTime": null
+    }
+  ]
 }

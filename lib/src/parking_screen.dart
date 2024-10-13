@@ -15,7 +15,7 @@ List<String> userOptions = [
   '3. Edit a parking',
   '4. Remove a parking',
   '5. Go back to start screen',
-  '6. Quit',
+  'q. Quit',
 ];
 
 void parkingScreen() {
@@ -30,19 +30,24 @@ void parkingScreen() {
 
   while (userInput != 5) {
     printGreeting('You can now administrate parkings. What do you wanna do?');
-    //userOptions.forEach(stdout.writeln);
     userInput = checkIntOption(
         question: 'Choose an option (1-5): ',
-        maxNumber: 6,
+        maxNumber: 5,
         userOptions: userOptions,
         menu: true);
     clearScreen();
     printGreeting('You chose: ${userOptions.elementAt(userInput - 1)}');
     switch (userInput) {
       case 1: // add parking
-        // for (final (index, item) in vehicleList.indexed) {
-        //   print("${index + 1}. $item");
-        // }
+        if (vehicleList.isEmpty) {
+          print(
+              'To add a parking you need a vehicle. Press any key to go back to main menu and choose to add a vehicle.');
+          stdin.readLineSync();
+          clearScreen();
+          userInput = 5;
+          break;
+        }
+        printListInfo('This is the vehicles you can add:');
         int vehicleIndex = checkIntOption(
             question:
                 'Enter number of the vehicle you would like to add to this parking: ',
@@ -51,9 +56,15 @@ void parkingScreen() {
             menu: false);
         Vehicle vehicle = vehicleList[vehicleIndex - 1];
 
-        // for (final (index, item) in vehicleList.indexed) {
-        //   print("${index + 1}. $item");
-        // }
+        if (lotList.isEmpty) {
+          print(
+              'To add a parking you need a parking lot. Press any key to go back to main menu and choose to add a parking lot.');
+          stdin.readLineSync();
+          clearScreen();
+          userInput = 5;
+          break;
+        }
+        printListInfo('This is the parking lots you can add:');
         int lotIndex = checkIntOption(
             question:
                 'Enter number of the parking lot you would like to add to this parking: ',
@@ -101,9 +112,6 @@ void parkingScreen() {
         if (parkingList.isEmpty) {
           print('There is no parkings to edit.');
         } else {
-          // for (final (index, item) in parkingList.indexed) {
-          //   print("${index + 1}. $item");
-          // }
           int editNo = checkIntOption(
               question: 'What number do you want to edit? ',
               maxNumber: parkingList.length,
@@ -115,11 +123,8 @@ void parkingScreen() {
               question: 'Do you want to change vehicle? (y?): ');
           if (changeVehicle) {
             if (vehicleList.isEmpty) {
-              print('No owner to change to');
+              print('No vehicle to change to');
             } else {
-              // for (final (index, item) in vehicleList.indexed) {
-              //   print("${index + 1}. $item");
-              // }
               int vehicleIndex = checkIntOption(
                   question:
                       'Enter number of the vehicle you would like to add to this vehicle: ',
@@ -137,9 +142,6 @@ void parkingScreen() {
             if (lotList.isEmpty) {
               print('No parking lot to change to');
             } else {
-              // for (final (index, item) in lotList.indexed) {
-              //   print("${index + 1}. $item");
-              // }
               int lotIndex = checkIntOption(
                   question:
                       'Enter number of the parking lot you would like to add to this vehicle: ',
@@ -174,9 +176,6 @@ void parkingScreen() {
         if (parkingList.isEmpty) {
           print('There is no parkings to remove.');
         } else {
-          // for (final (index, item) in lotList.indexed) {
-          //   print("${index + 1}. $item");
-          // }
           int removeNo = checkIntOption(
               question: 'What number do you want to remove? ',
               maxNumber: parkingList.length,

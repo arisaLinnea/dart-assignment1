@@ -39,7 +39,7 @@ class Vehicle {
     return Vehicle(
       id: json['id'],
       registrationNo: json['registrationNo'],
-      type: json['type'],
+      type: VehicleType.values.firstWhere((e) => e.toString() == json['type']),
       owner: json['owner'] ?? Owner.fromJson(json['owner']),
     );
   }
@@ -47,7 +47,7 @@ class Vehicle {
   Map<String, dynamic> toJson() => {
         'id': _id,
         'registrationNo': _registrationNo,
-        'type': _type,
+        'type': _type.toString(),
         'owner': _owner.toJson()
       };
 

@@ -13,7 +13,7 @@ List<String> userOptions = [
   '3. Edit a vehicle',
   '4. Remove a vehicle',
   '5. Go back to start screen',
-  '6. Quit',
+  'q. Quit',
 ];
 
 void vehicleScreen() {
@@ -22,19 +22,19 @@ void vehicleScreen() {
   int? userInput;
   clearScreen();
 
+  List<Owner> ownerList = ownerRespository.getList();
+
   while (userInput != 5) {
     printGreeting('You can now administrate vehicles. What do you wanna do?');
-    // userOptions.forEach(stdout.writeln);
     userInput = checkIntOption(
         question: 'Choose an option (1-5): ',
-        maxNumber: 6,
+        maxNumber: 5,
         userOptions: userOptions,
         menu: true);
     clearScreen();
     printGreeting('You chose: ${userOptions.elementAt(userInput - 1)}');
     switch (userInput) {
       case 1: // add vehicle
-        List<Owner> ownerList = ownerRespository.getList();
         if (ownerList.isEmpty) {
           print(
               'To add a vehicle you need an owner. Press any key to go back to main menu and choose to add an owner.');
@@ -45,20 +45,14 @@ void vehicleScreen() {
         }
         String registrationNo = checkInputStringValues(
             question: 'Registration number for new vehicle: ');
-
-        // for (final (index, type) in VehicleType.values.indexed) {
-        //   print("${index + 1}. $type");
-        // }
-
+        printListInfo('This is the types you can add:');
         int vehicleTypeIndex = checkIntOption(
             question: 'Type for new vehicle: ',
             maxNumber: VehicleType.values.length,
             userOptions: VehicleType.values,
             menu: false);
         VehicleType type = VehicleType.values[vehicleTypeIndex - 1];
-        // for (final (index, item) in ownerList.indexed) {
-        //   print("${index + 1}. $item");
-        // }
+        printListInfo('This is the owners you can add:');
         int ownerIndex = checkIntOption(
             question:
                 'Enter number of the owner you would like to add to this vehicle: ',
@@ -87,9 +81,6 @@ void vehicleScreen() {
         if (vehicleList.isEmpty) {
           print('There is no vehicles to edit.');
         } else {
-          // for (final (index, item) in vehicleList.indexed) {
-          //   print("${index + 1}. $item");
-          // }
           int editNo = checkIntOption(
               question: 'What number do you want to edit? ',
               maxNumber: vehicleList.length,
@@ -107,10 +98,7 @@ void vehicleScreen() {
           bool changeType =
               checkBoolOption(question: 'Do you want to change type (y?): ');
           if (changeType) {
-            // for (final (index, type) in VehicleType.values.indexed) {
-            //   print("${index + 1}. $type");
-            // }
-
+            printListInfo('This is the types you can add:');
             int vehicleTypeIndex = checkIntOption(
                 question: 'What type to you want to change to?: ',
                 maxNumber: VehicleType.values.length,
@@ -121,13 +109,10 @@ void vehicleScreen() {
           bool changeOwner =
               checkBoolOption(question: 'Do you want to change owner (y?): ');
           if (changeOwner) {
-            List<Owner> ownerList = ownerRespository.getList();
             if (ownerList.isEmpty) {
               print('No owner to change to');
             } else {
-              // for (final (index, item) in ownerList.indexed) {
-              //   print("${index + 1}. $item");
-              // }
+              printListInfo('This is the owners you can add:');
               int ownerIndex = checkIntOption(
                   question:
                       'Enter number of the owner you would like to add to this vehicle: ',
@@ -148,9 +133,6 @@ void vehicleScreen() {
         if (vehicleList.isEmpty) {
           print('There is no vehicles to remove.');
         } else {
-          // for (final (index, item) in vehicleList.indexed) {
-          //   print("${index + 1}. $item");
-          // }
           int removeNo = checkIntOption(
               question: 'What number do you want to remove? ',
               maxNumber: vehicleList.length,

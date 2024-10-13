@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dart_assignment1/src/models/parkinglot.dart';
 import 'package:dart_assignment1/src/repositories/parking_lot_repository.dart';
 import 'package:dart_assignment1/src/utils/effects.dart';
@@ -11,7 +9,7 @@ List<String> userOptions = [
   '3. Edit a parking lot',
   '4. Remove a parking lot',
   '5. Go back to start screen',
-  '6. Quit',
+  'q. Quit',
 ];
 
 void parkingLotScreen() {
@@ -22,10 +20,9 @@ void parkingLotScreen() {
   while (userInput != 5) {
     printGreeting(
         'You can now administrate parking lots. What do you wanna do?');
-    // userOptions.forEach(stdout.writeln);
     userInput = checkIntOption(
         question: 'Choose an option (1-5): ',
-        maxNumber: 6,
+        maxNumber: 5,
         menu: true,
         userOptions: userOptions);
     clearScreen();
@@ -62,9 +59,6 @@ void parkingLotScreen() {
         if (lotList.isEmpty) {
           print('There is no parking lots to edit.');
         } else {
-          // for (final (index, item) in lotList.indexed) {
-          //   print("${index + 1}. $item");
-          // }
           int editNo = checkIntOption(
               question: 'What number do you want to edit? ',
               maxNumber: lotList.length,
@@ -102,9 +96,6 @@ void parkingLotScreen() {
         if (lotList.isEmpty) {
           print('There is no parking lots to remove.');
         } else {
-          // for (final (index, item) in lotList.indexed) {
-          //   print("${index + 1}. $item");
-          // }
           int removeNo = checkIntOption(
               question: 'What number do you want to remove? ',
               maxNumber: lotList.length,

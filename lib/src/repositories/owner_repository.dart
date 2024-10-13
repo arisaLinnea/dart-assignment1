@@ -6,10 +6,7 @@ class OwnerRespository extends Repository<Owner> {
 
   OwnerRespository._internal();
 
-  // static OwnerRespository get instance =>
-  //     _instance; // användning => OwnerRespository.instance.add(Owner("Bob", 23));
-  factory OwnerRespository() =>
-      _instance; // användning => OwnerRespository.add(Owner("Bob", 23));
+  factory OwnerRespository() => _instance;
 
   @override
   Owner getElementById({required String id}) {
