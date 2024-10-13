@@ -9,7 +9,7 @@ Set<String> userOptions = {
   '1. Owners',
   '2. Vehicles',
   '3. Parkinglots',
-  '4. Your parkings',
+  '4. Parkings',
   '5. Quit'
 };
 

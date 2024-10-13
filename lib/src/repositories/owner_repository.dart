@@ -1,4 +1,4 @@
-import 'package:dart_assignment1/src/models/Owner.dart';
+import 'package:dart_assignment1/src/models/owner.dart';
 import 'package:dart_assignment1/src/repositories/repository.dart';
 
 class OwnerRespository extends Repository<Owner> {

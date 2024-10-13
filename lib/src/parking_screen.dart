@@ -1,0 +1,197 @@
+import 'dart:io';
+
+import 'package:dart_assignment1/src/models/vehicle.dart';
+import 'package:dart_assignment1/src/models/parking.dart';
+import 'package:dart_assignment1/src/models/parkinglot.dart';
+import 'package:dart_assignment1/src/repositories/parking_lot_repository.dart';
+import 'package:dart_assignment1/src/repositories/parking_repository.dart';
+import 'package:dart_assignment1/src/repositories/vehicle_repository.dart';
+import 'package:dart_assignment1/src/utils/effects.dart';
+import 'package:dart_assignment1/src/utils/menu_choices.dart';
+
+List<String> userOptions = [
+  '1. Create a new parking',
+  '2. Show me all parkings',
+  '3. Edit a parking',
+  '4. Remove a parking',
+  '5. Go back to start screen',
+  '6. Quit',
+];
+
+void parkingScreen() {
+  ParkingRespository respository = ParkingRespository();
+  VehicleRespository vehicleRespository = VehicleRespository();
+  ParkingLotRespository parkingLotRespository = ParkingLotRespository();
+  int? userInput;
+  clearScreen();
+
+  List<Vehicle> vehicleList = vehicleRespository.getList();
+  List<ParkingLot> lotList = parkingLotRespository.getList();
+
+  while (userInput != 5) {
+    printGreeting('You can now administrate parkings. What do you wanna do?');
+    //userOptions.forEach(stdout.writeln);
+    userInput = checkIntOption(
+        question: 'Choose an option (1-5): ',
+        maxNumber: 6,
+        userOptions: userOptions,
+        menu: true);
+    clearScreen();
+    printGreeting('You chose: ${userOptions.elementAt(userInput - 1)}');
+    switch (userInput) {
+      case 1: // add parking
+        // for (final (index, item) in vehicleList.indexed) {
+        //   print("${index + 1}. $item");
+        // }
+        int vehicleIndex = checkIntOption(
+            question:
+                'Enter number of the vehicle you would like to add to this parking: ',
+            maxNumber: vehicleList.length,
+            userOptions: vehicleList,
+            menu: false);
+        Vehicle vehicle = vehicleList[vehicleIndex - 1];
+
+        // for (final (index, item) in vehicleList.indexed) {
+        //   print("${index + 1}. $item");
+        // }
+        int lotIndex = checkIntOption(
+            question:
+                'Enter number of the parking lot you would like to add to this parking: ',
+            maxNumber: lotList.length,
+            userOptions: lotList,
+            menu: false);
+        ParkingLot parkingLot = lotList[lotIndex - 1];
+
+        DateTime startTime = DateTime.now();
+
+        bool setEndDate =
+            checkBoolOption(question: 'Do you want to set an end date (y?): ');
+        DateTime? endTime;
+        if (setEndDate) {
+          int setHours = checkHourOption(
+              question:
+                  "How many hours from now do you want the parking to end? (0 for now): ");
+          int setMinutes = checkHourOption(
+              question:
+                  "How many minutes from now (+ $setHours) do you want the parking to end? (0 for now): ");
+          endTime = DateTime.now()
+              .add(Duration(hours: setHours, minutes: setMinutes));
+        }
+
+        Parking newParking = Parking(
+            vehicle: vehicle,
+            parkinglot: parkingLot,
+            startTime: startTime,
+            endTime: endTime);
+        respository.addToList(item: newParking);
+        printAdd(newParking.toString());
+        printContinue();
+        break;
+      case 2: // list parkings
+        List<Parking> parkingList = respository.getList();
+        if (parkingList.isEmpty) {
+          print('The list of parkings are empty');
+        } else {
+          parkingList.forEach(print);
+        }
+        printContinue();
+        break;
+      case 3: // edit parking lot
+        List<Parking> parkingList = respository.getList();
+        if (parkingList.isEmpty) {
+          print('There is no parkings to edit.');
+        } else {
+          // for (final (index, item) in parkingList.indexed) {
+          //   print("${index + 1}. $item");
+          // }
+          int editNo = checkIntOption(
+              question: 'What number do you want to edit? ',
+              maxNumber: parkingList.length,
+              userOptions: parkingList,
+              menu: false);
+          Parking editParking = parkingList[editNo - 1];
+
+          bool changeVehicle = checkBoolOption(
+              question: 'Do you want to change vehicle? (y?): ');
+          if (changeVehicle) {
+            if (vehicleList.isEmpty) {
+              print('No owner to change to');
+            } else {
+              // for (final (index, item) in vehicleList.indexed) {
+              //   print("${index + 1}. $item");
+              // }
+              int vehicleIndex = checkIntOption(
+                  question:
+                      'Enter number of the vehicle you would like to add to this vehicle: ',
+                  maxNumber: vehicleList.length,
+                  userOptions: vehicleList,
+                  menu: false);
+              Vehicle vehicle = vehicleList[vehicleIndex - 1];
+              editParking.vehicle = vehicle;
+            }
+          }
+
+          bool changeLot = checkBoolOption(
+              question: 'Do you want to change parking lot? (y?): ');
+          if (changeLot) {
+            if (lotList.isEmpty) {
+              print('No parking lot to change to');
+            } else {
+              // for (final (index, item) in lotList.indexed) {
+              //   print("${index + 1}. $item");
+              // }
+              int lotIndex = checkIntOption(
+                  question:
+                      'Enter number of the parking lot you would like to add to this vehicle: ',
+                  maxNumber: lotList.length,
+                  userOptions: lotList,
+                  menu: false);
+              ParkingLot parkinglot = lotList[lotIndex - 1];
+              editParking.parkingLot = parkinglot;
+            }
+          }
+          // antar att starttid inte kan ändras (isf får man ta bort befintlig och starta en ny)
+          bool changeEndTime = checkBoolOption(
+              question: 'Do you want to change end time? (y?): ');
+          if (changeEndTime) {
+            int setHours = checkHourOption(
+                question:
+                    "How many hours from now do you want the parking to end? (0 for now): ");
+            int setMinutes = checkHourOption(
+                question:
+                    "How many minutes from now (+ $setHours) do you want the parking to end? (0 for now): ");
+            DateTime endTime = DateTime.now()
+                .add(Duration(hours: setHours, minutes: setMinutes));
+            editParking.endTime = endTime;
+          }
+          respository.update(index: editNo - 1, item: editParking);
+          printAction('Parking lot has been updated');
+        }
+        printContinue();
+        break;
+      case 4: // remove parking
+        List<Parking> parkingList = respository.getList();
+        if (parkingList.isEmpty) {
+          print('There is no parkings to remove.');
+        } else {
+          // for (final (index, item) in lotList.indexed) {
+          //   print("${index + 1}. $item");
+          // }
+          int removeNo = checkIntOption(
+              question: 'What number do you want to remove? ',
+              maxNumber: parkingList.length,
+              userOptions: lotList,
+              menu: false);
+          respository.remove(index: removeNo - 1);
+          printAction('List of parkings has been updated.');
+        }
+
+        printContinue();
+        break;
+      case 6:
+        exitCli();
+      default:
+        break;
+    }
+  }
+}

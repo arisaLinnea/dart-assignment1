@@ -1,6 +1,6 @@
 abstract class Repository<T> {
   final List<T> _list = [];
-  void addToList({required T item, required String id}) {
+  void addToList({required T item}) {
     _list.add(item);
   }
 

@@ -31,17 +31,85 @@ bool checkBoolOption({required String question}) {
   return false;
 }
 
-int checkIntOption({required int maxNumber, required String question}) {
+void menuOption(List<dynamic> userOptions) {
+  userOptions.forEach(stdout.writeln);
+}
+
+void listOption(List<dynamic> list) {
+  for (final (index, item) in list.indexed) {
+    print("${index + 1}. $item");
+  }
+}
+
+int checkIntOption(
+    {required int maxNumber,
+    required List<dynamic> userOptions,
+    required String question,
+    required bool menu}) {
   int? numberChoosen;
   while (numberChoosen == null) {
+    menu ? menuOption(userOptions) : listOption(userOptions);
     stdout.write(question);
     String? input = stdin.readLineSync();
     if (input == null ||
         int.tryParse(input) == null ||
         int.parse(input) < 1 ||
         int.parse(input) > maxNumber) {
-      print(
+      clearScreen();
+      printError(
           'You entered "$input", but need to choose a number between 1-$maxNumber');
+      continue;
+    }
+    numberChoosen = int.parse(input);
+  }
+  return numberChoosen;
+}
+
+double checkDoubleOption({required String question}) {
+  double? numberChoosen;
+  while (numberChoosen == null) {
+    stdout.write(question);
+    String? input = stdin.readLineSync();
+    if (input == null || input == "" || double.tryParse(input) == null) {
+      print(
+          'You entered "$input", but need to choose a valid float/integer number');
+      continue;
+    }
+    numberChoosen = double.parse(input);
+  }
+  return numberChoosen;
+}
+
+int checkHourOption({required String question}) {
+  int? numberChoosen;
+  while (numberChoosen == null) {
+    stdout.write(question);
+    String? input = stdin.readLineSync();
+    if (input == null ||
+        input == "" ||
+        int.tryParse(input) == null ||
+        int.parse(input) < 0) {
+      print(
+          'You entered "$input", but need to choose a valid (positive integer) number');
+      continue;
+    }
+    numberChoosen = int.parse(input);
+  }
+  return numberChoosen;
+}
+
+int checkMinuteOption({required String question}) {
+  int? numberChoosen;
+  while (numberChoosen == null) {
+    stdout.write(question);
+    String? input = stdin.readLineSync();
+    if (input == null ||
+        input == "" ||
+        int.tryParse(input) == null ||
+        int.parse(input) < 0 ||
+        int.parse(input) > 59) {
+      print(
+          'You entered "$input", but need to choose a valid (positive integer) number under 60');
       continue;
     }
     numberChoosen = int.parse(input);

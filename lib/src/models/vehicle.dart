@@ -1,19 +1,19 @@
 import 'package:uuid/uuid.dart';
 
-import 'package:dart_assignment1/src/models/Owner.dart';
+import 'package:dart_assignment1/src/models/owner.dart';
 
-enum VehicalType { Car, MC, Bicycle, Moped, Tractor }
+enum VehicleType { Car, MC, Bicycle, Moped, Tractor }
 
 class Vehicle {
   String _id;
   String _registrationNo;
-  VehicalType _type;
+  VehicleType _type;
   Owner _owner;
 
   // Vehicle(this.registrationNo, this.type, this.owner);
   Vehicle(
       {required String registrationNo,
-      required VehicalType type,
+      required VehicleType type,
       required Owner owner,
       String? id})
       : _id = id ?? Uuid().v4(),
@@ -27,7 +27,7 @@ class Vehicle {
     _registrationNo = value;
   }
 
-  set type(VehicalType value) {
+  set type(VehicleType value) {
     _type = value;
   }
 

@@ -6,20 +6,38 @@ class Parking {
   String _id;
   Vehicle _vehicle;
   ParkingLot _parkinglot;
-  String _startTime;
-  String? _endTime;
+  DateTime _startTime;
+  DateTime? _endTime;
 
   Parking(
       {required Vehicle vehicle,
       required ParkingLot parkinglot,
-      required String startTime,
-      String? endTime,
+      required DateTime startTime,
+      DateTime? endTime,
       String? id})
       : _id = id ?? Uuid().v4(),
         _vehicle = vehicle,
         _parkinglot = parkinglot,
         _startTime = startTime,
         _endTime = endTime;
+
+  String get id => _id;
+
+  set vehicle(Vehicle value) {
+    _vehicle = value;
+  }
+
+  set parkingLot(ParkingLot value) {
+    _parkinglot = value;
+  }
+
+  set startTime(DateTime value) {
+    _startTime = value;
+  }
+
+  set endTime(DateTime value) {
+    _endTime = value;
+  }
 
   factory Parking.fromJson(Map<String, dynamic> json) {
     return Parking(
@@ -38,4 +56,9 @@ class Parking {
         'startTime': _startTime,
         'endTime': _endTime
       };
+
+  @override
+  String toString() {
+    return 'Vehicle: ${_vehicle.toString()}, Parking lot: ${_parkinglot.toString()}, $_startTime';
+  }
 }

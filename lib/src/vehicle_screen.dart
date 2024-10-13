@@ -1,20 +1,20 @@
 import 'dart:io';
 
-import 'package:dart_assignment1/src/models/Owner.dart';
-import 'package:dart_assignment1/src/models/Vehicle.dart';
+import 'package:dart_assignment1/src/models/owner.dart';
+import 'package:dart_assignment1/src/models/vehicle.dart';
 import 'package:dart_assignment1/src/repositories/owner_repository.dart';
 import 'package:dart_assignment1/src/repositories/vehicle_repository.dart';
 import 'package:dart_assignment1/src/utils/effects.dart';
 import 'package:dart_assignment1/src/utils/menu_choices.dart';
 
-Set<String> userOptions = {
+List<String> userOptions = [
   '1. Create a new vehicle',
   '2. Show me all vehicles',
   '3. Edit a vehicle',
   '4. Remove a vehicle',
   '5. Go back to start screen',
   '6. Quit',
-};
+];
 
 void vehicleScreen() {
   VehicleRespository respository = VehicleRespository();
@@ -24,9 +24,12 @@ void vehicleScreen() {
 
   while (userInput != 5) {
     printGreeting('You can now administrate vehicles. What do you wanna do?');
-    userOptions.forEach(stdout.writeln);
-    userInput =
-        checkIntOption(question: 'Choose an option (1-5): ', maxNumber: 6);
+    // userOptions.forEach(stdout.writeln);
+    userInput = checkIntOption(
+        question: 'Choose an option (1-5): ',
+        maxNumber: 6,
+        userOptions: userOptions,
+        menu: true);
     clearScreen();
     printGreeting('You chose: ${userOptions.elementAt(userInput - 1)}');
     switch (userInput) {
@@ -43,31 +46,34 @@ void vehicleScreen() {
         String registrationNo = checkInputStringValues(
             question: 'Registration number for new vehicle: ');
 
-        for (final (index, type) in VehicalType.values.indexed) {
-          print("${index + 1}. $type");
-        }
+        // for (final (index, type) in VehicleType.values.indexed) {
+        //   print("${index + 1}. $type");
+        // }
 
-        int vehicalTypeIndex = checkIntOption(
+        int vehicleTypeIndex = checkIntOption(
             question: 'Type for new vehicle: ',
-            maxNumber: VehicalType.values.length);
-        VehicalType type = VehicalType.values[vehicalTypeIndex - 1];
-        // ownerList.forEach(print);
-        for (final (index, item) in ownerList.indexed) {
-          print("${index + 1}. $item");
-        }
+            maxNumber: VehicleType.values.length,
+            userOptions: VehicleType.values,
+            menu: false);
+        VehicleType type = VehicleType.values[vehicleTypeIndex - 1];
+        // for (final (index, item) in ownerList.indexed) {
+        //   print("${index + 1}. $item");
+        // }
         int ownerIndex = checkIntOption(
             question:
                 'Enter number of the owner you would like to add to this vehicle: ',
-            maxNumber: ownerList.length);
+            maxNumber: ownerList.length,
+            userOptions: ownerList,
+            menu: false);
         Owner vehicleOwner = ownerList[ownerIndex - 1];
 
         Vehicle newVehicle = Vehicle(
             registrationNo: registrationNo, type: type, owner: vehicleOwner);
-        print(newVehicle.toString());
-        respository.addToList(item: newVehicle, id: newVehicle.id);
+        respository.addToList(item: newVehicle);
+        printAdd(newVehicle.toString());
         printContinue();
         break;
-      case 2: // list owner
+      case 2: // list vehicle
         List<Vehicle> vehicleList = respository.getList();
         if (vehicleList.isEmpty) {
           print('The list of vehicles are empty');
@@ -76,17 +82,19 @@ void vehicleScreen() {
         }
         printContinue();
         break;
-      case 3: // edit owner
+      case 3: // edit vehicle
         List<Vehicle> vehicleList = respository.getList();
         if (vehicleList.isEmpty) {
           print('There is no vehicles to edit.');
         } else {
-          for (final (index, item) in vehicleList.indexed) {
-            print("${index + 1}. $item");
-          }
+          // for (final (index, item) in vehicleList.indexed) {
+          //   print("${index + 1}. $item");
+          // }
           int editNo = checkIntOption(
               question: 'What number do you want to edit? ',
-              maxNumber: vehicleList.length);
+              maxNumber: vehicleList.length,
+              userOptions: vehicleList,
+              menu: false);
           Vehicle editVehicle = vehicleList[editNo - 1];
           bool changRegNo = checkBoolOption(
               question: 'Do you want to change registration number? (y?): ');
@@ -99,14 +107,16 @@ void vehicleScreen() {
           bool changeType =
               checkBoolOption(question: 'Do you want to change type (y?): ');
           if (changeType) {
-            for (final (index, type) in VehicalType.values.indexed) {
-              print("${index + 1}. $type");
-            }
+            // for (final (index, type) in VehicleType.values.indexed) {
+            //   print("${index + 1}. $type");
+            // }
 
-            int vehicalTypeIndex = checkIntOption(
+            int vehicleTypeIndex = checkIntOption(
                 question: 'What type to you want to change to?: ',
-                maxNumber: VehicalType.values.length);
-            editVehicle.type = VehicalType.values[vehicalTypeIndex - 1];
+                maxNumber: VehicleType.values.length,
+                userOptions: VehicleType.values,
+                menu: false);
+            editVehicle.type = VehicleType.values[vehicleTypeIndex - 1];
           }
           bool changeOwner =
               checkBoolOption(question: 'Do you want to change owner (y?): ');
@@ -115,35 +125,39 @@ void vehicleScreen() {
             if (ownerList.isEmpty) {
               print('No owner to change to');
             } else {
-              for (final (index, item) in ownerList.indexed) {
-                print("${index + 1}. $item");
-              }
+              // for (final (index, item) in ownerList.indexed) {
+              //   print("${index + 1}. $item");
+              // }
               int ownerIndex = checkIntOption(
                   question:
                       'Enter number of the owner you would like to add to this vehicle: ',
-                  maxNumber: ownerList.length);
+                  maxNumber: ownerList.length,
+                  userOptions: ownerList,
+                  menu: false);
               Owner vehicleOwner = ownerList[ownerIndex - 1];
               editVehicle.owner = vehicleOwner;
             }
           }
           respository.update(index: editNo - 1, item: editVehicle);
-          print('Vehicle has been updated');
+          printAction('Vehicle has been updated');
         }
         printContinue();
         break;
-      case 4: // remove owner
+      case 4: // remove vehicle
         List<Vehicle> vehicleList = respository.getList();
         if (vehicleList.isEmpty) {
           print('There is no vehicles to remove.');
         } else {
-          for (final (index, item) in vehicleList.indexed) {
-            print("${index + 1}. $item");
-          }
+          // for (final (index, item) in vehicleList.indexed) {
+          //   print("${index + 1}. $item");
+          // }
           int removeNo = checkIntOption(
               question: 'What number do you want to remove? ',
-              maxNumber: vehicleList.length);
+              maxNumber: vehicleList.length,
+              userOptions: vehicleList,
+              menu: false);
           respository.remove(index: removeNo - 1);
-          print('List of vehicles has been updated.');
+          printAction('List of vehicles has been updated.');
         }
 
         printContinue();

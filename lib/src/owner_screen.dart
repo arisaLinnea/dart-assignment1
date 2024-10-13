@@ -1,18 +1,18 @@
 import 'dart:io';
 
-import 'package:dart_assignment1/src/models/Owner.dart';
+import 'package:dart_assignment1/src/models/owner.dart';
 import 'package:dart_assignment1/src/repositories/owner_repository.dart';
 import 'package:dart_assignment1/src/utils/effects.dart';
 import 'package:dart_assignment1/src/utils/menu_choices.dart';
 
-Set<String> userOptions = {
+List<String> userOptions = [
   '1. Create a new owner',
   '2. Show me all owners',
   '3. Edit an owner',
   '4. Remove an owner',
   '5. Go back to start screen',
   '6. Quit',
-};
+];
 
 void ownerScreen() {
   OwnerRespository respository = OwnerRespository();
@@ -23,9 +23,12 @@ void ownerScreen() {
     // String? name = "";
     // String? ssn = "";
     printGreeting('You can now administrate owners. What do you wanna do?');
-    userOptions.forEach(stdout.writeln);
-    userInput =
-        checkIntOption(question: 'Choose an option (1-5): ', maxNumber: 6);
+    // userOptions.forEach(stdout.writeln);
+    userInput = checkIntOption(
+        question: 'Choose an option (1-5): ',
+        maxNumber: 6,
+        menu: true,
+        userOptions: userOptions);
     clearScreen();
     printGreeting('You chose: ${userOptions.elementAt(userInput - 1)}');
     switch (userInput) {
@@ -33,8 +36,8 @@ void ownerScreen() {
         String name = checkInputStringValues(question: 'Name on new owner: ');
         String ssn = checkInputStringValues(question: 'Ssn for new owner: ');
         Owner newOwner = Owner(name: name, ssn: ssn);
-        print(newOwner.toString());
-        respository.addToList(item: newOwner, id: newOwner.id);
+        respository.addToList(item: newOwner);
+        printAdd(newOwner.toString());
         printContinue();
         break;
       case 2: // list owner
@@ -51,12 +54,14 @@ void ownerScreen() {
         if (ownerList.isEmpty) {
           print('There is no owners to edit.');
         } else {
-          for (final (index, item) in ownerList.indexed) {
-            print("${index + 1}. $item");
-          }
+          // for (final (index, item) in ownerList.indexed) {
+          //   print("${index + 1}. $item");
+          // }
           int editNo = checkIntOption(
               question: 'What number do you want to edit? ',
-              maxNumber: ownerList.length);
+              maxNumber: ownerList.length,
+              userOptions: ownerList,
+              menu: false);
           Owner editOwner = ownerList[editNo - 1];
           bool changeName =
               checkBoolOption(question: 'Do you want to change name? (y?): ');
@@ -73,7 +78,7 @@ void ownerScreen() {
             editOwner.name = ssn;
           }
           respository.update(index: editNo - 1, item: editOwner);
-          print('Owner has been updated');
+          printAction('Owner has been updated');
         }
         printContinue();
         break;
@@ -82,14 +87,16 @@ void ownerScreen() {
         if (ownerList.isEmpty) {
           print('There is no owners to remove.');
         } else {
-          for (final (index, item) in ownerList.indexed) {
-            print("${index + 1}. $item");
-          }
+          // for (final (index, item) in ownerList.indexed) {
+          //   print("${index + 1}. $item");
+          // }
           int removeNo = checkIntOption(
               question: 'What number do you want to remove? ',
-              maxNumber: ownerList.length);
+              maxNumber: ownerList.length,
+              menu: false,
+              userOptions: ownerList);
           respository.remove(index: removeNo - 1);
-          print('List of owners has been updated.');
+          printAction('List of owners has been updated.');
         }
 
         printContinue();

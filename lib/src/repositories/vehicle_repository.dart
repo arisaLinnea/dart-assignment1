@@ -1,4 +1,4 @@
-import 'package:dart_assignment1/src/models/Vehicle.dart';
+import 'package:dart_assignment1/src/models/vehicle.dart';
 import 'package:dart_assignment1/src/repositories/repository.dart';
 
 class VehicleRespository extends Repository<Vehicle> {
