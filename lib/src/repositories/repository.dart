@@ -18,4 +18,6 @@ abstract class Repository<T> {
     T item = _list.elementAt(index);
     _list.remove(item);
   }
+
+  void readJsonFile(String filePath);
 }

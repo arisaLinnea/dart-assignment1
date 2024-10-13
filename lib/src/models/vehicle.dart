@@ -40,7 +40,7 @@ class Vehicle {
       id: json['id'],
       registrationNo: json['registrationNo'],
       type: VehicleType.values.firstWhere((e) => e.toString() == json['type']),
-      owner: json['owner'] ?? Owner.fromJson(json['owner']),
+      owner: Owner.fromJson(json['owner']),
     );
   }
 

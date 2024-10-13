@@ -1,6 +1,8 @@
+import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
+
 import 'package:dart_assignment1/src/models/parkinglot.dart';
 import 'package:dart_assignment1/src/models/vehicle.dart';
-import 'package:uuid/uuid.dart';
 
 class Parking {
   String _id;
@@ -42,11 +44,11 @@ class Parking {
   factory Parking.fromJson(Map<String, dynamic> json) {
     return Parking(
         id: json['id'],
-        vehicle: json['vehicle'] ?? Vehicle.fromJson(json['vehicle']),
-        parkinglot:
-            json['parkinglot'] ?? ParkingLot.fromJson(json['parkinglot']),
+        vehicle: Vehicle.fromJson(json['vehicle']),
+        parkinglot: ParkingLot.fromJson(json['parkinglot']),
         startTime: DateTime.parse(json['startTime']),
-        endTime: json['endTime'] ?? DateTime.parse(json['startTime']));
+        endTime:
+            json['endTime'] != null ? DateTime.parse(json['startTime']) : null);
   }
 
   Map<String, dynamic> toJson() => {
@@ -60,6 +62,10 @@ class Parking {
 
   @override
   String toString() {
-    return 'Vehicle: ${_vehicle.toString()}, Parking lot: ${_parkinglot.toString()}, $_startTime';
+    var formatter = DateFormat('dd-MM-yyyy HH:mm');
+    String formattedStartDate = formatter.format(_startTime);
+    String? formattedEndDate =
+        _endTime != null ? formatter.format(_endTime!) : null;
+    return 'Vehicle: ${_vehicle.toString()}, Parking lot: ${_parkinglot.toString()}, Starttime: $formattedStartDate, Endtime: ${formattedEndDate ?? '-'}';
   }
 }

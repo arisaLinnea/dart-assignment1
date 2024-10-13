@@ -43,8 +43,8 @@ class ParkingLot {
   factory ParkingLot.fromJson(Map<String, dynamic> json) {
     return ParkingLot(
         id: json['id'],
-        address: json['address'] ?? Address.fromJson(json['owner']),
-        hourlyPrice: json['hourlyPrice']);
+        address: Address.fromJson(json['address']),
+        hourlyPrice: double.parse(json['hourlyPrice']));
   }
 
   Map<String, dynamic> toJson() =>

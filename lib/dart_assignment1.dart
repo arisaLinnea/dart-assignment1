@@ -25,38 +25,24 @@ List<String> userOptions = [
 ];
 
 const JsonDecoder decoder = JsonDecoder();
+String filePath = 'db/storage.json';
 
 void readFromFile() {
   OwnerRespository ownerRespository = OwnerRespository();
+  ownerRespository.readJsonFile(filePath);
+
   VehicleRespository vehicleRespository = VehicleRespository();
+  vehicleRespository.readJsonFile(filePath);
+
   ParkingLotRespository parkinglotRespository = ParkingLotRespository();
+  parkinglotRespository.readJsonFile(filePath);
+
   ParkingRespository parkingRespository = ParkingRespository();
-
-  final storage = File('db/storage.json');
-  var jsonString = storage.readAsStringSync();
-  final Map<String, dynamic> jsonmap = decoder.convert(jsonString);
-
-  List<dynamic> owners = jsonmap["owners"];
-  List<dynamic> vehicles = jsonmap["vehicles"];
-  List<dynamic> parkinglots = jsonmap["parkinglots"];
-  List<dynamic> parkings = jsonmap["parkings"];
-
-  for (var item in owners) {
-    ownerRespository.addToList(item: Owner.fromJson(item));
-  }
-  for (var item in vehicles) {
-    vehicleRespository.addToList(item: Vehicle.fromJson(item));
-  }
-  for (var item in parkinglots) {
-    parkinglotRespository.addToList(item: ParkingLot.fromJson(item));
-  }
-  for (var item in parkings) {
-    parkingRespository.addToList(item: Parking.fromJson(item));
-  }
+  parkingRespository.readJsonFile(filePath);
 }
 
 void createParkingCli() {
-  // readFromFile();
+  readFromFile();
 
   clearScreen();
   printGreeting('Welcome to FindMeASpot!');
