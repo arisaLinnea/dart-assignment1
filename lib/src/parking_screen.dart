@@ -103,7 +103,9 @@ void parkingScreen() {
         if (parkingList.isEmpty) {
           print('The list of parkings are empty');
         } else {
-          parkingList.forEach(print);
+          for (var item in parkingList) {
+            print("* $item");
+          }
         }
         printContinue();
         break;

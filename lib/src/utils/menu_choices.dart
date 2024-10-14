@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:dart_assignment1/src/utils/validator.dart';
+
 import 'effects.dart';
 
 void printContinue() {
@@ -11,12 +13,37 @@ void printContinue() {
 String checkInputStringValues({required String question}) {
   String? inputValue;
   while (inputValue == "" || inputValue == null) {
-    //   if (inputValue == "") {
     stdout.write(question);
     inputValue = stdin.readLineSync();
-    //   }
     if (inputValue == "") {
       printError('Invalid input. Please fill in missing value.');
+    }
+  }
+  return inputValue;
+}
+
+String checkInputSsnValues({required String question}) {
+  String? inputValue;
+  while (inputValue == "" || inputValue == null) {
+    stdout.write(question);
+    inputValue = stdin.readLineSync();
+    print(validateSsn(inputValue) ? 'validat ssn true' : 'validate ssn false');
+    if (inputValue == "" || !validateSsn(inputValue)) {
+      inputValue = "";
+      printError('Invalid input. Please fill in a valid ssn, eg YYMMDDNNNN.');
+    }
+  }
+  return inputValue;
+}
+
+String checkInputRegNoValues({required String question}) {
+  String? inputValue;
+  while (inputValue == "" || inputValue == null) {
+    stdout.write(question);
+    inputValue = stdin.readLineSync();
+    if (inputValue == "" || !validateRegNo(inputValue)) {
+      inputValue = "";
+      printError('Invalid input. Please fill in a regNo.');
     }
   }
   return inputValue;

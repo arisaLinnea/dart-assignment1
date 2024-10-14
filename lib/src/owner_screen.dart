@@ -29,7 +29,8 @@ void ownerScreen() {
     switch (userInput) {
       case 1: // add owner
         String name = checkInputStringValues(question: 'Name on new owner: ');
-        String ssn = checkInputStringValues(question: 'Ssn for new owner: ');
+        String ssn =
+            checkInputSsnValues(question: 'Ssn for new owner (YYMMDDNNNN): ');
         Owner newOwner = Owner(name: name, ssn: ssn);
         respository.addToList(item: newOwner);
         printAdd(newOwner.toString());
@@ -40,7 +41,9 @@ void ownerScreen() {
         if (ownerList.isEmpty) {
           print('The list of owners are empty');
         } else {
-          ownerList.forEach(print);
+          for (var item in ownerList) {
+            print('* $item');
+          }
         }
         printContinue();
         break;
@@ -65,7 +68,7 @@ void ownerScreen() {
           bool changeSsn =
               checkBoolOption(question: 'Do you want to change ssn? (y?): ');
           if (changeSsn) {
-            String ssn = checkInputStringValues(
+            String ssn = checkInputSsnValues(
                 question: 'What ssn to you want to change to?: ');
             editOwner.name = ssn;
           }

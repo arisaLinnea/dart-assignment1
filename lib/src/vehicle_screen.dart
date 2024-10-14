@@ -43,7 +43,7 @@ void vehicleScreen() {
           userInput = 5;
           break;
         }
-        String registrationNo = checkInputStringValues(
+        String registrationNo = checkInputRegNoValues(
             question: 'Registration number for new vehicle: ');
         printListInfo('This is the types you can add:');
         int vehicleTypeIndex = checkIntOption(
@@ -72,7 +72,9 @@ void vehicleScreen() {
         if (vehicleList.isEmpty) {
           print('The list of vehicles are empty');
         } else {
-          vehicleList.forEach(print);
+          for (var item in vehicleList) {
+            print("* $item");
+          }
         }
         printContinue();
         break;
@@ -90,7 +92,7 @@ void vehicleScreen() {
           bool changRegNo = checkBoolOption(
               question: 'Do you want to change registration number? (y?): ');
           if (changRegNo) {
-            String regNo = checkInputStringValues(
+            String regNo = checkInputRegNoValues(
                 question:
                     'What registration number to you want to change to?: ');
             editVehicle.registrationNo = regNo;
