@@ -76,7 +76,7 @@ void parkingScreen() {
         DateTime startTime = DateTime.now();
 
         bool setEndDate =
-            checkBoolOption(question: 'Do you want to set an end date (y?): ');
+            checkBoolOption(question: 'Do you want to set an end time (y?): ');
         DateTime? endTime;
         if (setEndDate) {
           int setHours = checkHourOption(
@@ -84,7 +84,7 @@ void parkingScreen() {
                   "How many hours from now do you want the parking to end? (0 for now): ");
           int setMinutes = checkHourOption(
               question:
-                  "How many minutes from now (+ $setHours) do you want the parking to end? (0 for now): ");
+                  "How many minutes from now (+ $setHours hours) do you want the parking to end? (0 for now): ");
           endTime = DateTime.now()
               .add(Duration(hours: setHours, minutes: setMinutes));
         }
